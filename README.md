@@ -4,6 +4,7 @@
 Numpy, Pylab, re
 
 
+## Purpose
 This model takes weather data from major U.S. cities and fits a regression line to test if the climate is indeed warming up.
 
 Notes:
