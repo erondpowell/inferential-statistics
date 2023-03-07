@@ -1,5 +1,5 @@
 # Problem Set 4 - from MITx 6.00.2x
-Inferential Stat, Regression and Hypothesis testing - OOP: 
+## OOP: Inferential Stat, Regression and Hypothesis testing 
 
 ## Dependencies:
 Numpy, Pylab, re
