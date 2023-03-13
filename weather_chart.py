@@ -38,7 +38,7 @@ class Climate(object):
 
     def __init__(self, filename):
         """
-        Initialize a Climate instance, which stores the temperature records
+        Initializes a Climate instance, which stores the temperature records
         loaded from a given csv file specified by filename.
 
         Args:
@@ -114,7 +114,7 @@ class Climate(object):
 
 def generate_models(x, y, degs):
     """
-    Generate regression models by fitting a polynomial for each degree in degs
+    Generates regression models by fitting a polynomial for each degree in degs
     to points (x, y).
     Args:
         x: a list with length N, representing the x-coords of N sample points
@@ -137,7 +137,7 @@ def generate_models(x, y, degs):
 
 def r_squared(y, estimated):
     """
-    Calculate the R-squared error term.
+    Calculates the R-squared error term.
     Args:
         y: list with length N, representing the y-coords of N sample points
         estimated: a list of values estimated by the regression model
@@ -153,22 +153,21 @@ def r_squared(y, estimated):
 
 def evaluate_models_on_training(x, y, models):
     """
-    For each regression model, compute the R-square for this model with the
+    For each regression model, computes the R-square for this model with the
     standard error over slope of a linear regression line (only if the model is
     linear), and plot the data along with the best fit curve.
 
-    For the plots, you should plot data points (x,y) as blue dots and your best
-    fit curve (aka model) as a red solid line. You should also label the axes
-    of this figure appropriately and have a title reporting the following
-    information:
-        degree of your regression model,
-        R-square of your model evaluated on the given data points
+    Plots data points (x,y) as blue dots and the best
+    fit curve (aka model) as a red solid line. 
+
+    Labels:
+        Degree of regression model.
+        R-square of model evaluated on the given data points.
 
     Args:
         x: a list of length N, representing the x-coords of N sample points
         y: a list of length N, representing the y-coords of N sample points
-        models: a list containing the regression models you want to apply to
-            your data. Each model is a numpy array storing the coefficients of
+        models: A list containing the regression models to apply to data. Each model is a numpy array storing the coefficients of
             a polynomial.
 
     Returns:
@@ -189,26 +188,21 @@ def evaluate_models_on_training(x, y, models):
         pylab.ylabel('temperature')
 
 
-# Begining of program
+# Beginning of program
 raw_data = Climate('data.csv')
 
-# Problem 3
-y = []
-x = INTERVAL_1
+# Charts daily temp on a given day, over INTERVAL yrs, for a city.
+y1 = []
 for year in INTERVAL_1:
-    y.append(raw_data.get_daily_temp('BOSTON', 1, 10, year))
-# models = generate_models(x, y, [1])
-# evaluate_models_on_training(x, y, models)
+    y1.append(raw_data.get_daily_temp('BOSTON', 1, 10, year))
+models = generate_models(INTERVAL_1, y1, [1])
+evaluate_models_on_training(INTERVAL_1, y1, models)
 
-
-# Problem 4: FILL IN MISSING CODE TO GENERATE y VALUES
-x1 = INTERVAL_1
-x2 = INTERVAL_2
-y = []
+# Charts average yearly temp, over INTERVAL yrs, for a city.
+y2 = []
 for year in INTERVAL_1:
     temp_array = raw_data.get_yearly_temp('BOSTON', year)
     avg_temp = temp_array.sum() / len(temp_array)
-    y.append(avg_temp)
-# MISSING LINES
-models = generate_models(x, y, [1])
-evaluate_models_on_training(x, y, models)
+    y2.append(avg_temp)
+models = generate_models(INTERVAL_1, y2, [1])
+evaluate_models_on_training(INTERVAL_1, y2, models)
