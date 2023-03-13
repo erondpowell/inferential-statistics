@@ -128,8 +128,8 @@ def generate_models(x, y, degs):
     yVals = pylab.array(y)
     models = []
 
-    for ye_like_degs in degs:
-        model = pylab.polyfit(xVals, yVals, ye_like_degs)
+    for deg in degs:
+        model = pylab.polyfit(xVals, yVals, deg)
         models.append(model)
 
     return models
@@ -191,14 +191,14 @@ def evaluate_models_on_training(x, y, models):
 # Beginning of program
 raw_data = Climate('data.csv')
 
-# Charts daily temp on a given day, over INTERVAL yrs, for a city.
+# Charts regression model of daily temp on a given day, over INTERVAL yrs, for a city.
 y1 = []
 for year in INTERVAL_1:
     y1.append(raw_data.get_daily_temp('BOSTON', 1, 10, year))
 models = generate_models(INTERVAL_1, y1, [1])
 evaluate_models_on_training(INTERVAL_1, y1, models)
 
-# Charts average yearly temp, over INTERVAL yrs, for a city.
+# Charts regression model of average yearly temp, over INTERVAL yrs, for a city.
 y2 = []
 for year in INTERVAL_1:
     temp_array = raw_data.get_yearly_temp('BOSTON', year)
