@@ -33,10 +33,13 @@ INTERVAL_2 = list(range(2006, 2016))
 """
 Begin helper code
 """
+
+
 class Climate(object):
     """
     The collection of temperature records loaded from given csv file
     """
+
     def __init__(self, filename):
         """
         Initialize a Climate instance, which stores the temperature records
@@ -52,7 +55,8 @@ class Climate(object):
         for line in f:
             items = line.strip().split(',')
 
-            date = re.match('(\d\d\d\d)(\d\d)(\d\d)', items[header.index('DATE')])
+            date = re.match('(\d\d\d\d)(\d\d)(\d\d)',
+                            items[header.index('DATE')])
             year = int(date.group(1))
             month = int(date.group(2))
             day = int(date.group(3))
@@ -66,7 +70,7 @@ class Climate(object):
             if month not in self.rawdata[city][year]:
                 self.rawdata[city][year][month] = {}
             self.rawdata[city][year][month][day] = temperature
-            
+
         f.close()
 
     def get_yearly_temp(self, city, year):
@@ -112,12 +116,6 @@ class Climate(object):
         return self.rawdata[city][year][month][day]
 
 
-
-"""
-End helper code
-"""
-
-# Problem 1
 def generate_models(x, y, degs):
     """
     Generate regression models by fitting a polynomial for each degree in degs
@@ -133,17 +131,14 @@ def generate_models(x, y, degs):
     xVals = pylab.array(x)
     yVals = pylab.array(y)
     models = []
-    
+
     for ye_like_degs in degs:
         model = pylab.polyfit(xVals, yVals, ye_like_degs)
         models.append(model)
-    
+
     return models
 
 
-
-
-# Problem 2
 def r_squared(y, estimated):
     """
     Calculate the R-squared error term.
@@ -154,14 +149,12 @@ def r_squared(y, estimated):
         a float for the R-squared error term
     """
     sum_of_squares = 0
-    for i in range(len(estimated)): 
-        sum_of_squares += (estimated[i]- y[i])**2
+    for i in range(len(estimated)):
+        sum_of_squares += (estimated[i] - y[i])**2
     variance = sum_of_squares / len(estimated)
     return 1 - (variance / np.var(y))
-        
 
 
-# Problem 3
 def evaluate_models_on_training(x, y, models):
     """
     For each regression model, compute the R-square for this model with the
@@ -174,35 +167,33 @@ def evaluate_models_on_training(x, y, models):
     information:
         degree of your regression model,
         R-square of your model evaluated on the given data points
-        
+
     Args:
         x: a list of length N, representing the x-coords of N sample points
         y: a list of length N, representing the y-coords of N sample points
         models: a list containing the regression models you want to apply to
             your data. Each model is a numpy array storing the coefficients of
             a polynomial.
-            
+
     Returns:
         None
     """
     for model in models:
-        #estimates == estYVals
+        # estimates == estYVals
         estimates = pylab.polyval(model, x)
-        
+
         if len(model) == 2:
             r_sqr = r_squared(y, estimates)
-    
-        pylab.plot(x, y, 'bo', label = 'recorded y values')
-        pylab.plot(x, estimates, 'r', label = 'Regression line')
-        pylab.legend(loc = 'best')
+
+        pylab.plot(x, y, 'bo', label='recorded y values')
+        pylab.plot(x, estimates, 'r', label='Regression line')
+        pylab.legend(loc='best')
         pylab.title('climate changes\n' + 'r squared value:' + str(r_sqr))
         pylab.xlabel('years')
         pylab.ylabel('temperature')
-        
-    
 
 
-### Begining of program
+# Begining of program
 raw_data = Climate('data.csv')
 
 # Problem 3
@@ -214,7 +205,6 @@ for year in INTERVAL_1:
 # evaluate_models_on_training(x, y, models)
 
 
-
 # Problem 4: FILL IN MISSING CODE TO GENERATE y VALUES
 x1 = INTERVAL_1
 x2 = INTERVAL_2
@@ -224,5 +214,5 @@ for year in INTERVAL_1:
     avg_temp = temp_array.sum() / len(temp_array)
     y.append(avg_temp)
 # MISSING LINES
-models = generate_models(x, y, [1])    
+models = generate_models(x, y, [1])
 evaluate_models_on_training(x, y, models)
