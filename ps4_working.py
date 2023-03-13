@@ -30,10 +30,6 @@ CITIES = [
 INTERVAL_1 = list(range(1961, 2006))
 INTERVAL_2 = list(range(2006, 2016))
 
-"""
-Begin helper code
-"""
-
 
 class Climate(object):
     """
